@@ -8,7 +8,6 @@ Select * from product_category_name_translation;
 ALTER TABLE product_category_name_translation
 ADD product_id VARCHAR(255); -- (Adjust data type to INT or VARCHAR based on your schema)
 
-
 -- 2. Update and populate product_id using INNER JOIN on category name
 UPDATE t
 SET t.product_id = p.product_id
