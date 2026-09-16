@@ -45,10 +45,6 @@ olist_customers ──► olist_orders ──► olist_order_items ──► oli
 - Compare estimated vs. actual delivery dates.
 - Identify regional logistics patterns and potential route optimization opportunities.
 
-### 😊 Customer Satisfaction — NLP & Classification
-- Process customer review text using NLP techniques.
-- Predict low ratings (1–2 stars).
-- Identify factors associated with poor customer satisfaction and potential churn.
 
 ### 📈 Sales Forecasting
 - Perform time-series analysis on order volume and revenue.
@@ -63,4 +59,4 @@ olist_customers ──► olist_orders ──► olist_order_items ──► oli
 
 ## 🛠️ Technologies Used
 
-- **Languages:** Python, SQL
+- **Languages:** SQL
