@@ -19,13 +19,18 @@ An end-to-end exploratory analysis and data modeling project based on the **Olis
 The data is structured into **8 interconnected relational tables** forming a Star Schema:
 
 ```text
-                     olist_sellers
-                          │
-                          ▼
-olist_customers ──► olist_orders ──► olist_order_items ──► olist_products
-                          │                  │
-                          ├─► reviews        └─► geolocation
-                          └─► payments
+
+            order_payments
+                   │
+                   ▼
+  customers ───► orders ◄─── order_items ───► products
+    │              │             │
+    ▼              ▼             ▼
+geolocation     reviews        sellers
+                                 │
+                                 ▼
+                            geolocation
+
 ``` 
 ## 📋 Table Descriptions
 
