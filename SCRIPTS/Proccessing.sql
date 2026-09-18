@@ -93,4 +93,27 @@ WHERE geolocation_city = '* cidade'
 
 --                              <-> that's was difficult table but i smashed it very hard [Hahahahahaha] <-> 
 
+-------------------------------------------------------------------------------------
+                  /* (4) Order Item Table */
+-- 1. Check for null values
+SELECT * FROM order_items
+WHERE  order_id is null
+OR order_id is null
+OR order_id is null   -- No Null values in geolocation Table
 
+-- 2. Check for Duplicates ##
+SELECT  order_id,product_id,freight_value,
+COUNT(*) AS Duplicates
+FROM order_items
+GROUP BY order_id,product_id,freight_value
+HAVING COUNT(*) > 1    -- Their is Duplicates in order id 
+
+-- 3. Handling Duplicates
+With CTE AS (
+Select 
+*, 
+ROW_NUMBER() Over( Partition by order_id, product_id, freight_value Order by (Select NULL) )AS row_num
+FROM order_items
+)
+DELETE FROM CTE 
+WHERE row_num > 1
