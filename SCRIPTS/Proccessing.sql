@@ -117,3 +117,20 @@ FROM order_items
 )
 DELETE FROM CTE 
 WHERE row_num > 1
+
+-------------------------------------------------------------------------------------
+                  /* (5) Order payments Table */
+-- 1. Check for null values
+SELECT * FROM order_payments
+WHERE  order_id is null                        -- No Null values in order payments Table
+
+
+-- 2. Check for Duplicates 
+SELECT  order_id,payment_sequential,
+COUNT(*) AS Duplicates
+FROM order_payments
+GROUP BY order_id, payment_sequential
+HAVING COUNT(*) > 1    -- Their is Duplicates in order id but its normal the important that's not duplicates in this order id in payment sequential. 
+                                              -- The Customer may pay to the same order by more than payment type
+
+
