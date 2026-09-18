@@ -91,5 +91,6 @@ Update geolocation
 SET geolocation_city = 'cidade'
 WHERE geolocation_city = '* cidade'
 
---                                                                ### that's was difficult but i enjoyed ###
+--                              <-> that's was difficult table but i smashed it very hard [Hahahahahaha] <-> 
+
 
