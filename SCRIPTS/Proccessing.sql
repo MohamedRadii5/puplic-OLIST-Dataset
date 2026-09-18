@@ -180,3 +180,44 @@ COUNT(*) AS Duplicates
 FROM seller
 Group by seller_id
 HAVING COUNT(*) > 1                  -- No Duplicates in seller Table
+
+-------------------------------------------------------------------------------------
+                  /* (9) seller  Table */
+-- 1. Check for null values
+SELECT * FROM order_reviews
+WHERE review_id is Null 
+OR review_comment_title is Null
+OR review_comment_message is Null             -- There is null values in review_comment_title and review_comment_message
+
+-- Replace null values in review_comment_title by No comment
+Update order_reviews
+SET review_comment_title = 'No comment'
+WHERE review_comment_title is Null
+
+-- Replace null values in review_comment_message by No comment
+Update order_reviews
+SET review_comment_message = 'No comment'
+WHERE review_comment_message is Null
+
+-- 2. Check for Duplicates 
+SELECT review_id, 
+COUNT(*) AS Duplicates
+FROM order_reviews
+Group by review_id
+HAVING COUNT(*) > 1                 -- There is Duplicates in seller Table
+
+-- Handling Duplicates
+With CTE AS (
+Select 
+*, 
+ROW_NUMBER() Over( Partition by review_id Order by (Select NULL) )AS row_num
+FROM order_reviews
+)
+DELETE FROM CTE 
+WHERE row_num > 1
+-------------------------------------------------------------------------------------
+--=========================  <-> I AM EL DAWLY [NUM1] <-> ===========================
+-------------------------------------------------------------------------------------
+### that was data cleaning and proccessing 
+### The Next Steps is Analytics
+### Stay Tuned 
