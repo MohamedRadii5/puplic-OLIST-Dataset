@@ -148,4 +148,21 @@ FROM orders
 GROUP BY order_id
 HAVING COUNT(*) > 1          -- No Duplicates in orders Table
 
+-------------------------------------------------------------------------------------
+                  /* (7) Products  Table */
+-- 1. Check for null values
+SELECT * FROM products
+WHERE product_id is Null         
+OR product_category_name is Null         -- there is null values in product category name column in products table
+
+-- delete null values because we won't benifit from them in any thing 
+DELETE FROM products
+WHERE product_category_name is Null
+
+-- 2. Check for Duplicates 
+SELECT  product_id,
+COUNT(*) AS Duplicates
+FROM products
+GROUP BY product_id
+HAVING COUNT(*) > 1                  -- No Duplicates in products Table
 
