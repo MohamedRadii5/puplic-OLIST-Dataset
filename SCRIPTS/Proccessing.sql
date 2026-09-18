@@ -133,4 +133,19 @@ GROUP BY order_id, payment_sequential
 HAVING COUNT(*) > 1    -- Their is Duplicates in order id but its normal the important that's not duplicates in this order id in payment sequential. 
                                               -- The Customer may pay to the same order by more than payment type
 
+-------------------------------------------------------------------------------------
+                  /* (6) Orders Table */
+-- 1. Check for null values
+SELECT * FROM orders
+WHERE  order_id is null
+OR customer_id is null             -- No Null Values in orders Table
+
+
+-- 2. Check for Duplicates 
+SELECT  order_id,
+COUNT(*) AS Duplicates
+FROM orders
+GROUP BY order_id
+HAVING COUNT(*) > 1          -- No Duplicates in orders Table
+
 
