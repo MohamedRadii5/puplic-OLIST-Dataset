@@ -42,3 +42,54 @@ COUNT(*) AS Duplicates
 FROM customers
 GROUP BY customer_id
 HAVING COUNT(*) > 1    -- No Duplicates in customers Table
+ 
+-------------------------------------------------------------------------------------
+                  /* (3) geolocation Table */
+-- 1. Check for null values
+SELECT * FROM geolocation
+WHERE  geolocation_zip_code_prefix is null
+OR geolocation_zip_code_prefix is null
+OR geolocation_zip_code_prefix is null   -- No Null values in geolocation Table
+
+-- 2. Check for Duplicates                
+SELECT  Distinct geolocation_state,
+geolocation_zip_code_prefix, 
+COUNT(*) AS Duplicates
+FROM geolocation
+GROUP BY geolocation_zip_code_prefix,  geolocation_state
+HAVING COUNT(*) > 1 
+
+-- Show what we have 
+Select Distinct geolocation_city, geolocation_state
+FROM geolocation;
+
+Select Distinct geolocation_zip_code_prefix, geolocation_city
+FROM geolocation;
+
+-- Handling Duplicates in geolocation_city
+With LOC_CTE AS (
+SELECT *
+, ROW_NUMBER() OVER (Partition by geolocation_state order by (Select Null)) AS Duplicates
+FROM geolocation
+)
+DELETE FROM LOC_CTE 
+WHERE Duplicates > 1          -- Now it's fixed temporary (But there is duplicates in sao paulo only)
+
+-- Fix sao paulo rows
+Update geolocation
+SET geolocation_city = 'SP'
+WHERE geolocation_state = 'são paulo'
+Update geolocation
+SET geolocation_city = 'SP'
+WHERE geolocation_state = 'sao paulo'
+Update geolocation
+SET geolocation_city = 'sao paulo'
+WHERE geolocation_state = 'SP'
+
+-- Fix cidade rows
+Update geolocation
+SET geolocation_city = 'cidade'
+WHERE geolocation_city = '* cidade'
+
+--                                                                ### that's was difficult but i enjoyed ###
+
