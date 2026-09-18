@@ -166,3 +166,17 @@ FROM products
 GROUP BY product_id
 HAVING COUNT(*) > 1                  -- No Duplicates in products Table
 
+
+-------------------------------------------------------------------------------------
+                  /* (8) seller  Table */
+-- 1. Check for null values
+SELECT * FROM seller
+WHERE seller_id is Null                 -- No Null Values in seller Table 
+
+
+-- 2. Check for Duplicates 
+SELECT seller_id, 
+COUNT(*) AS Duplicates
+FROM seller
+Group by seller_id
+HAVING COUNT(*) > 1                  -- No Duplicates in seller Table
