@@ -16,8 +16,7 @@ JOIN order_items i
 GROUP BY geolocation_city;   
 ----------------------------------------------------------------------
 
--- [2] Top Products Sales.
-
+### [2] Top Products Sales.
 -- 1. In brazilian language
 SELECT 
 	ROW_NUMBER() OVER(ORDER BY COUNT(o.order_id) DESC) AS row_num,
@@ -44,3 +43,17 @@ JOIN orders o
 	ON i.order_id = o.order_id
 GROUP BY product_category_name_english;
 ----------------------------------------------------------------------
+
+-- [3] Best Seller From Where and how much he sell 
+SELECT TOP 15
+	ROW_NUMBER() OVER(ORDER BY SUM(i.price) DESC) AS row_num,
+	s.seller_id,
+	s.seller_city AS city,
+	SUM(i.price) AS sales_amount,
+	COUNT(o.order_id) AS orders_count
+FROM seller s
+JOIN order_items i
+	ON s.seller_id = i.seller_id
+JOIN orders o
+	ON i.order_id = o.order_id
+GROUP BY s.seller_id, s.seller_city
