@@ -1,14 +1,44 @@
  -- EDA & Analytics
  --=========================================================
 ### KPIs
+-- 1. AVG order Value
+SELECT 
+	ROUND(AVG(price),2) AS avg_order_value
+FROM order_items
 
+-- 2. AVG freight value(Shipping value)
+SELECT 
+	ROUND(AVG(freight_value), 2) AS avg_shipping_value
+FROM order_items
 
+-- 3. Total Sales
+SELECT 
+	ROUND(SUM(price), 3) AS sales
+FROM order_items
 
+-- 4. MAX value for order
+SELECT 
+	ROUND(MAX(price), 3) AS sales
+FROM order_items
 
+-- 5. MIN value for order
+SELECT 
+	ROUND(MIN(price), 3) AS sales
+FROM order_items
 
+-- 6. AVG score review
+SELECT 
+	AVG(review_score)AS avg_score
+FROM order_reviews 
 
+-- 7. AVG shipping days
+SELECT 
+	AVG(DATEDIFF(day,o.order_purchase_timestamp, o.order_estimated_delivery_date)) AS avg_shipping_days
+FROM orders o
 
-
+--=========================================================
+--=========================================================
+	
 	
 ### ANALYSIS	
 -- [1] Top Cities Sales. 
